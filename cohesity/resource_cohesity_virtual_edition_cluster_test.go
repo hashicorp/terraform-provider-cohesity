@@ -3,6 +3,7 @@ package cohesity
 import (
 	"errors"
 	"fmt"
+	"log"
 	"testing"
 
 	CohesityManagementSdk "github.com/cohesity/management-sdk-go/managementsdk"
@@ -13,13 +14,14 @@ import (
 func TestAccVirtualEditionCluster(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		Providers:    testAccProviders,
-		CheckDestroy: testAccCheckVirtualEditionClusterResourceDestroy,
+		CheckDestroy: testAccCheckVirtualEditionClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccVirtualEditionClusterResourceConfig,
+				Config: testAccVirtualEditionClusterConfig,
 				Check: resource.ComposeTestCheckFunc(
 					testAccVirtualEditionClusterExists(),
-					resource.TestCheckResourceAttr("cohesity_virtual_edition_cluster.virtual", "cluster_name", "AcceptanceTestTerraformVirtaulEditionCluster"),
+					resource.TestCheckResourceAttr("cohesity_virtual_edition_cluster.virtual", "cluster_name",
+						"AcceptanceTestTerraformVirtaulEditionCluster"),
 					resource.TestCheckResourceAttr("cohesity_virtual_edition_cluster.virtual", "enable_encryption", "true"),
 					resource.TestCheckResourceAttr("cohesity_virtual_edition_cluster.virtual", "cluster_gateway", "10.2.32.1"),
 					resource.TestCheckResourceAttr("cohesity_virtual_edition_cluster.virtual", "enable_fips_mode", "true"),
@@ -33,10 +35,12 @@ func TestAccVirtualEditionCluster(t *testing.T) {
 	})
 }
 
-func testAccCheckVirtualEditionClusterResourceDestroy(s *terraform.State) error {
+func testAccCheckVirtualEditionClusterDestroy(s *terraform.State) error {
 	var cohesityConfig = testAccProvider.Meta().(Config)
-	client, err := CohesityManagementSdk.NewCohesitySdkClient(cohesityConfig.cohesityVip, cohesityConfig.cohesityUserName, cohesityConfig.cohesityPassword, cohesityConfig.cohesityDomain)
+	client, err := CohesityManagementSdk.NewCohesitySdkClient(cohesityConfig.clusterVip,
+		cohesityConfig.clusterUsername, cohesityConfig.clusterPassword, cohesityConfig.clusterDomain)
 	if err != nil {
+		log.Printf(err.Error())
 		return fmt.Errorf("Failed to authenticate with Cohesity")
 	}
 	result, infoErr := client.Cluster().GetBasicClusterInfo()
@@ -49,8 +53,10 @@ func testAccCheckVirtualEditionClusterResourceDestroy(s *terraform.State) error 
 func testAccVirtualEditionClusterExists() resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		var cohesityConfig = testAccProvider.Meta().(Config)
-		client, err := CohesityManagementSdk.NewCohesitySdkClient(cohesityConfig.cohesityVip, cohesityConfig.cohesityUserName, cohesityConfig.cohesityPassword, cohesityConfig.cohesityDomain)
+		client, err := CohesityManagementSdk.NewCohesitySdkClient(cohesityConfig.clusterVip,
+			cohesityConfig.clusterUsername, cohesityConfig.clusterPassword, cohesityConfig.clusterDomain)
 		if err != nil {
+			log.Printf(err.Error())
 			return errors.New("Failed to authenticate with Cohesity")
 		}
 		result, infoErr := client.Cluster().GetBasicClusterInfo()
@@ -69,11 +75,11 @@ func testAccVirtualEditionClusterExists() resource.TestCheckFunc {
 	}
 }
 
-const testAccVirtualEditionClusterResourceConfig = `
+const testAccVirtualEditionClusterConfig = `
 provider "cohesity" {
-	cohesity_vip = "10.2.33.137"
-	cohesity_username = "admin"
-	cohesity_domain = "LOCAL"
+	cluster_vip = "10.2.33.137"
+	cluster_username = "admin"
+	cluster_domain = "LOCAL"
 }
 
 resource "cohesity_virtual_edition_cluster" "virtual"{

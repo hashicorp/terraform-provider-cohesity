@@ -3,6 +3,7 @@ package cohesity
 import (
 	"errors"
 	"fmt"
+	"log"
 	"testing"
 
 	CohesityManagementSdk "github.com/cohesity/management-sdk-go/managementsdk"
@@ -13,13 +14,14 @@ import (
 func TestAccCloudEditionCluster(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		Providers:    testAccProviders,
-		CheckDestroy: testAccCheckCloudEditionClusterResourceDestroy,
+		CheckDestroy: testAccCheckCloudEditionClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccCloudEditionClusterResourceConfig,
+				Config: testAccCloudEditionClusterConfig,
 				Check: resource.ComposeTestCheckFunc(
 					testAccCloudEditionClusterExists(),
-					resource.TestCheckResourceAttr("cohesity_cloud_edition_cluster.cloud", "cluster_name", "AcceptanceTestTerraformCloudEditionCluster"),
+					resource.TestCheckResourceAttr("cohesity_cloud_edition_cluster.cloud", "cluster_name",
+						"AcceptanceTestTerraformCloudEditionCluster"),
 					resource.TestCheckResourceAttr("cohesity_cloud_edition_cluster.cloud", "enable_encryption", "true"),
 					resource.TestCheckResourceAttr("cohesity_cloud_edition_cluster.cloud", "cluster_gateway", "10.2.32.1"),
 					resource.TestCheckResourceAttr("cohesity_cloud_edition_cluster.cloud", "enable_fips_mode", "true"),
@@ -32,10 +34,12 @@ func TestAccCloudEditionCluster(t *testing.T) {
 	})
 }
 
-func testAccCheckCloudEditionClusterResourceDestroy(s *terraform.State) error {
+func testAccCheckCloudEditionClusterDestroy(s *terraform.State) error {
 	var cohesityConfig = testAccProvider.Meta().(Config)
-	client, err := CohesityManagementSdk.NewCohesitySdkClient(cohesityConfig.cohesityVip, cohesityConfig.cohesityUserName, cohesityConfig.cohesityPassword, cohesityConfig.cohesityDomain)
+	client, err := CohesityManagementSdk.NewCohesitySdkClient(cohesityConfig.clusterVip,
+		cohesityConfig.clusterUsername, cohesityConfig.clusterPassword, cohesityConfig.clusterDomain)
 	if err != nil {
+		log.Printf(err.Error())
 		return fmt.Errorf("Failed to authenticate with Cohesity")
 	}
 	result, infoErr := client.Cluster().GetBasicClusterInfo()
@@ -48,8 +52,10 @@ func testAccCheckCloudEditionClusterResourceDestroy(s *terraform.State) error {
 func testAccCloudEditionClusterExists() resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		var cohesityConfig = testAccProvider.Meta().(Config)
-		client, err := CohesityManagementSdk.NewCohesitySdkClient(cohesityConfig.cohesityVip, cohesityConfig.cohesityUserName, cohesityConfig.cohesityPassword, cohesityConfig.cohesityDomain)
+		client, err := CohesityManagementSdk.NewCohesitySdkClient(cohesityConfig.clusterVip,
+			cohesityConfig.clusterUsername, cohesityConfig.clusterPassword, cohesityConfig.clusterDomain)
 		if err != nil {
+			log.Printf(err.Error())
 			return errors.New("Failed to authenticate with Cohesity")
 		}
 		result, infoErr := client.Cluster().GetBasicClusterInfo()
@@ -68,11 +74,11 @@ func testAccCloudEditionClusterExists() resource.TestCheckFunc {
 	}
 }
 
-const testAccCloudEditionClusterResourceConfig = `
+const testAccCloudEditionClusterConfig = `
 provider "cohesity" {
-	cohesity_vip = "10.2.45.143"
-	cohesity_username = "admin"
-	cohesity_domain = "LOCAL"
+	cluster_vip = "10.2.45.143"
+	cluster_username = "admin"
+	cluster_domain = "LOCAL"
 }
 
 resource "cohesity_cloud_edition_cluster" "cloud"{
@@ -86,6 +92,6 @@ resource "cohesity_cloud_edition_cluster" "cloud"{
 		enable_fips_mode = true
 		encryption_keys_rotation_period = 1
 		metadata_fault_tolerance = 0
-		node_ips = ["10.2.45.143", "10.2.45.144", "10.2.45.145"]           
+		node_ips = ["10.2.45.143", "10.2.45.144", "10.2.45.145"]        
 }
 `

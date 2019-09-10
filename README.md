@@ -62,9 +62,9 @@ After setting the environment variables <br>
 
     ```
     provider "cohesity" {
-            cohesity_vip = "10.2.33.137"
-            cohesity_username = "admin"
-            cohesity_domain = "LOCAL"
+            cluster_vip = "10.2.35.147"
+            cluster_username = "admin"
+            cluster_domain = "LOCAL"
     }
 
     resource "cohesity_virtual_edition_cluster" "virtual"{
@@ -78,10 +78,10 @@ After setting the environment variables <br>
                 enable_fips_mode = true
                 encryption_keys_rotation_period = 1
                 metadata_fault_tolerance = 0
-                virtual_ips = ["10.2.33.137"]
+                virtual_ips = ["10.2.35.147"]
                 virtual_ip_hostname = "test"
                 node_configs {
-                            node_ip="10.2.33.137"
+                            node_ip="10.2.35.147"
                             node_id=12
                             }
     }
@@ -111,18 +111,18 @@ Cohesity terraform provider is used to interact with cohesity and automate clust
 
 ```
 provider "cohesity" {
-        cohesity_vip = "10.2.45.143"
-        cohesity_username = "abc"
-        cohesity_password = "abc"
-        cohesity_domain = "LOCAL"
+        cluster_vip = "10.2.45.143"
+        cluster_username = "abc"
+        cluster_password = "abc"
+        cluster_domain = "LOCAL"
 
 }
 ```
 #### Argument Reference
-- cohesity_vip - (Required, string) IP or hostname of Cohesity cluster node. This can also be read from **COHESITY_IP** environment variable
-- cohesity_username - (Required, string) Cohesity cluster username. This can also be read from **COHESITY_USERNAME** environment variable
-- cohesity_password - (Required, string) Cohesity cluster password. This can also be read from **COHESITY_PASSWORD** environment variable
-- cohesity_domain - (Optional, string) The domain name of cohesity user. Defaults to **LOCAL**
+- cluster_vip - (Required, string) IP or hostname of Cohesity cluster node. This can also be read from **COHESITY_IP** environment variable
+- cluster_username - (Required, string) Cohesity cluster username. This can also be read from **COHESITY_USERNAME** environment variable
+- cluster_password - (Required, string) Cohesity cluster password. This can also be read from **COHESITY_PASSWORD** environment variable
+- cluster_domain - (Optional, string) The domain name of cohesity user. Defaults to **LOCAL**
 
 ## Resources
 
@@ -133,9 +133,9 @@ Create virtual edition cluster, apply license key and destroy cluster
 #### Example usage
 ```
 provider "cohesity" {
-        cohesity_vip = "10.2.33.199"
-        cohesity_username = "abcd"
-        cohesity_domain = "LOCAL"
+        cluster_vip = "10.2.33.199"
+        cluster_username = "abcd"
+        cluster_domain = "LOCAL"
 }
 
 resource "cohesity_virtual_edition_cluster" "virtual"{
@@ -200,9 +200,9 @@ Create cloud edition cluster, apply license key and destroy cluster
 #### Example usage
 ```
 provider "cohesity" {
-        cohesity_vip = "10.2.45.143"
-        cohesity_username = "abcd"
-        cohesity_domain = "LOCAL"
+        cluster_vip = "10.2.45.143"
+        cluster_username = "abcd"
+        cluster_domain = "LOCAL"
 }
 
 resource "cohesity_cloud_edition_cluster" "cloud"{
@@ -246,9 +246,9 @@ Create physical edition cluster, apply license key and destroy cluster
 #### Example usage
 ```
 provider "cohesity" {
-        cohesity_vip = "10.9.33.133"
-        cohesity_username = "abcd"
-        cohesity_domain = "LOCAL"
+        cluster_vip = "10.9.33.133"
+        cluster_username = "abcd"
+        cluster_domain = "LOCAL"
 }
 
 resource "cohesity_virtual_edition_cluster" "physical"{

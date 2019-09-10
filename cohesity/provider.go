@@ -5,28 +5,29 @@ import (
 	"github.com/hashicorp/terraform/terraform"
 )
 
+// Provider represents a resource provider in terraform
 func Provider() terraform.ResourceProvider {
 	return &schema.Provider{
 		Schema: map[string]*schema.Schema{
-			"cohesity_vip": {
+			"cluster_vip": {
 				Type:        schema.TypeString,
 				Required:    true,
 				DefaultFunc: schema.EnvDefaultFunc("COHESITY_IP", ""),
 				Description: "IP or hostname of Cohesity cluster node",
 			},
-			"cohesity_username": {
+			"cluster_username": {
 				Type:        schema.TypeString,
 				Required:    true,
 				DefaultFunc: schema.EnvDefaultFunc("COHESITY_USERNAME", ""),
 				Description: "Cohesity cluster username",
 			},
-			"cohesity_password": {
+			"cluster_password": {
 				Type:        schema.TypeString,
 				Required:    true,
 				DefaultFunc: schema.EnvDefaultFunc("COHESITY_PASSWORD", ""),
 				Description: "Cohesity cluster password",
 			},
-			"cohesity_domain": {
+			"cluster_domain": {
 				Type:        schema.TypeString,
 				Optional:    true,
 				Default:     "LOCAL",
@@ -45,10 +46,10 @@ func Provider() terraform.ResourceProvider {
 func providerConfigure(d *schema.ResourceData) (interface{}, error) {
 
 	config := Config{
-		cohesityVip:      d.Get("cohesity_vip").(string),
-		cohesityUserName: d.Get("cohesity_username").(string),
-		cohesityPassword: d.Get("cohesity_password").(string),
-		cohesityDomain:   d.Get("cohesity_domain").(string),
+		clusterVip:      d.Get("cluster_vip").(string),
+		clusterUsername: d.Get("cluster_username").(string),
+		clusterPassword: d.Get("cluster_password").(string),
+		clusterDomain:   d.Get("cluster_domain").(string),
 	}
 	return config, nil
 }

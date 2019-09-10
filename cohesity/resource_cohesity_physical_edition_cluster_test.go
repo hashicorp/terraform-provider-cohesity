@@ -3,6 +3,7 @@ package cohesity
 import (
 	"errors"
 	"fmt"
+	"log"
 	"testing"
 
 	CohesityManagementSdk "github.com/cohesity/management-sdk-go/managementsdk"
@@ -13,13 +14,14 @@ import (
 func TestAccPhysicalEditionCluster(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		Providers:    testAccProviders,
-		CheckDestroy: testAccCheckPhysicalEditionClusterResourceDestroy,
+		CheckDestroy: testAccCheckPhysicalEditionClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccPhysicalEditionClusterResourceConfig,
+				Config: testAccPhysicalEditionClusterConfig,
 				Check: resource.ComposeTestCheckFunc(
 					testAccPhysicalEditionClusterExists(),
-					resource.TestCheckResourceAttr("cohesity_physical_edition_cluster.physical", "cluster_name", "AcceptanceTestTerraformPhysicalEditionCluster"),
+					resource.TestCheckResourceAttr("cohesity_physical_edition_cluster.physical", "cluster_name",
+						"AcceptanceTestTerraformPhysicalEditionCluster"),
 					resource.TestCheckResourceAttr("cohesity_physical_edition_cluster.physical", "enable_encryption", "true"),
 					resource.TestCheckResourceAttr("cohesity_physical_edition_cluster.physical", "cluster_gateway", "10.2.32.1"),
 					resource.TestCheckResourceAttr("cohesity_physical_edition_cluster.physical", "enable_fips_mode", "true"),
@@ -33,10 +35,12 @@ func TestAccPhysicalEditionCluster(t *testing.T) {
 	})
 }
 
-func testAccCheckPhysicalEditionClusterResourceDestroy(s *terraform.State) error {
+func testAccCheckPhysicalEditionClusterDestroy(s *terraform.State) error {
 	var cohesityConfig = testAccProvider.Meta().(Config)
-	client, err := CohesityManagementSdk.NewCohesitySdkClient(cohesityConfig.cohesityVip, cohesityConfig.cohesityUserName, cohesityConfig.cohesityPassword, cohesityConfig.cohesityDomain)
+	client, err := CohesityManagementSdk.NewCohesitySdkClient(cohesityConfig.clusterVip,
+		cohesityConfig.clusterUsername, cohesityConfig.clusterPassword, cohesityConfig.clusterDomain)
 	if err != nil {
+		log.Printf(err.Error())
 		return fmt.Errorf("Failed to authenticate with Cohesity")
 	}
 	result, infoErr := client.Cluster().GetBasicClusterInfo()
@@ -49,8 +53,10 @@ func testAccCheckPhysicalEditionClusterResourceDestroy(s *terraform.State) error
 func testAccPhysicalEditionClusterExists() resource.TestCheckFunc {
 	return func(s *terraform.State) error {
 		var cohesityConfig = testAccProvider.Meta().(Config)
-		client, err := CohesityManagementSdk.NewCohesitySdkClient(cohesityConfig.cohesityVip, cohesityConfig.cohesityUserName, cohesityConfig.cohesityPassword, cohesityConfig.cohesityDomain)
+		client, err := CohesityManagementSdk.NewCohesitySdkClient(cohesityConfig.clusterVip,
+			cohesityConfig.clusterUsername, cohesityConfig.clusterPassword, cohesityConfig.clusterDomain)
 		if err != nil {
+			log.Printf(err.Error())
 			return errors.New("Failed to authenticate with Cohesity")
 		}
 		result, infoErr := client.Cluster().GetBasicClusterInfo()
@@ -69,14 +75,14 @@ func testAccPhysicalEditionClusterExists() resource.TestCheckFunc {
 	}
 }
 
-const testAccPhysicalEditionClusterResourceConfig = `
+const testAccPhysicalEditionClusterConfig = `
 provider "cohesity" {
-	cohesity_vip = "10.9.33.133"
-	cohesity_username = "admin"
-	cohesity_domain = "LOCAL"
+	cluster_vip = "10.9.33.133"
+	cluster_username = "admin"
+	cluster_domain = "LOCAL"
 }
 
-resource "cohesity_virtual_edition_cluster" "physical"{
+resource "cohesity_physical_edition_cluster" "physical"{
 		cluster_name = "AcceptanceTestTerraformPhysicalEditionCluster"
 		dns_servers = ["10.2.145.14"]
 		ntp_servers = ["time.google.com"]

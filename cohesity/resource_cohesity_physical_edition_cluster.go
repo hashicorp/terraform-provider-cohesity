@@ -37,16 +37,18 @@ func resourceCohesityPhysicalEditionCluster() *schema.Resource {
 				Description: "The metadata fault tolerance",
 			},
 			"enable_encryption": {
-				Type:        schema.TypeBool,
-				Optional:    true,
-				Default:     true,
-				Description: "Specifies whether or not to enable encryption. If encryption is enabled, all data on the cluster will be encrypted",
+				Type:     schema.TypeBool,
+				Optional: true,
+				Default:  true,
+				Description: `Specifies whether or not to enable encryption.
+				 If encryption is enabled, all data on the cluster will be encrypted`,
 			},
 			"enable_fips_mode": {
-				Type:        schema.TypeBool,
-				Optional:    true,
-				Default:     true,
-				Description: "Specifies whether or not to enable FIPS mode. This must be set to true in order to enable FIPS",
+				Type:     schema.TypeBool,
+				Optional: true,
+				Default:  true,
+				Description: `Specifies whether or not to enable FIPS mode.
+				 This must be set to true in order to enable FIPS`,
 			},
 			"encryption_keys_rotation_period": {
 				Type:        schema.TypeInt,
@@ -155,50 +157,52 @@ func resourceCohesityPhysicalEditionCluster() *schema.Resource {
 	}
 }
 
-func resourceCohesityPhysicalEditionClusterCreate(d *schema.ResourceData, m interface{}) error {
-	var cohesityConfig = m.(Config)
-	client, err := CohesityManagementSdk.NewCohesitySdkClient(cohesityConfig.cohesityVip, cohesityConfig.cohesityUserName, cohesityConfig.cohesityPassword, cohesityConfig.cohesityDomain)
+func resourceCohesityPhysicalEditionClusterCreate(resourceData *schema.ResourceData, configMetaData interface{}) error {
+	var cohesityConfig = configMetaData.(Config)
+	client, err := CohesityManagementSdk.NewCohesitySdkClient(cohesityConfig.clusterVip,
+		cohesityConfig.clusterUsername, cohesityConfig.clusterPassword, cohesityConfig.clusterDomain)
 	if err != nil {
+		log.Printf(err.Error())
 		return errors.New("Failed to authenticate with Cohesity")
 	}
 
-	var clusterName = d.Get("cluster_name").(string)
-	var metadataFaultTolerance = int64(d.Get("metadata_fault_tolerance").(int))
-	var enableEncryption = d.Get("enable_encryption").(bool)
-	var enableFipsMode = d.Get("enable_fips_mode").(bool)
-	var encryptionKeysRotationPeriod = int64(d.Get("encryption_keys_rotation_period").(int))
-	var clusterGateway = d.Get("cluster_gateway").(string)
-	var clusterSubnetMask = d.Get("cluster_subnet_mask").(string)
-	var vipHostName = d.Get("virtual_ip_hostname").(string)
-	var ipmiGateway = d.Get("ipmi_gateway").(string)
-	var ipmiPassword = d.Get("ipmi_password").(string)
-	var ipmiSubnetMask = d.Get("ipmi_subnet_mask").(string)
-	var ipmiUsername = d.Get("ipmi_username").(string)
+	var clusterName = resourceData.Get("cluster_name").(string)
+	var metadataFaultTolerance = int64(resourceData.Get("metadata_fault_tolerance").(int))
+	var enableEncryption = resourceData.Get("enable_encryption").(bool)
+	var enableFipsMode = resourceData.Get("enable_fips_mode").(bool)
+	var encryptionKeysRotationPeriod = int64(resourceData.Get("encryption_keys_rotation_period").(int))
+	var clusterGateway = resourceData.Get("cluster_gateway").(string)
+	var clusterSubnetMask = resourceData.Get("cluster_subnet_mask").(string)
+	var vipHostName = resourceData.Get("virtual_ip_hostname").(string)
+	var ipmiGateway = resourceData.Get("ipmi_gateway").(string)
+	var ipmiPassword = resourceData.Get("ipmi_password").(string)
+	var ipmiSubnetMask = resourceData.Get("ipmi_subnet_mask").(string)
+	var ipmiUsername = resourceData.Get("ipmi_username").(string)
 
 	log.Printf("[INFO] Create physical edition cluster: %s", clusterName)
 
-	domainNames := make([]string, d.Get("domain_names").(*schema.Set).Len())
-	for i, name := range d.Get("domain_names").(*schema.Set).List() {
+	domainNames := make([]string, resourceData.Get("domain_names").(*schema.Set).Len())
+	for i, name := range resourceData.Get("domain_names").(*schema.Set).List() {
 		domainNames[i] = name.(string)
 	}
 
-	ntpServers := make([]string, d.Get("ntp_servers").(*schema.Set).Len())
-	for i, ntp := range d.Get("ntp_servers").(*schema.Set).List() {
+	ntpServers := make([]string, resourceData.Get("ntp_servers").(*schema.Set).Len())
+	for i, ntp := range resourceData.Get("ntp_servers").(*schema.Set).List() {
 		ntpServers[i] = ntp.(string)
 	}
 
-	dnsServers := make([]string, d.Get("dns_servers").(*schema.Set).Len())
-	for i, dns := range d.Get("dns_servers").(*schema.Set).List() {
+	dnsServers := make([]string, resourceData.Get("dns_servers").(*schema.Set).Len())
+	for i, dns := range resourceData.Get("dns_servers").(*schema.Set).List() {
 		dnsServers[i] = dns.(string)
 	}
 
-	vips := make([]string, d.Get("virtual_ips").(*schema.Set).Len())
-	for i, vip := range d.Get("virtual_ips").(*schema.Set).List() {
+	vips := make([]string, resourceData.Get("virtual_ips").(*schema.Set).Len())
+	for i, vip := range resourceData.Get("virtual_ips").(*schema.Set).List() {
 		vips[i] = vip.(string)
 	}
 
-	nodeConfigs := make([]*models.PhysicalNodeConfiguration, d.Get("node_configs").(*schema.Set).Len())
-	for i, config := range d.Get("node_configs").(*schema.Set).List() {
+	nodeConfigs := make([]*models.PhysicalNodeConfiguration, resourceData.Get("node_configs").(*schema.Set).Len())
+	for i, config := range resourceData.Get("node_configs").(*schema.Set).List() {
 		nodeConfig := config.(map[string]interface{})
 		nodeIP := nodeConfig["node_ip"].(string)
 		nodeID := int64(nodeConfig["node_id"].(int))
@@ -237,10 +241,11 @@ func resourceCohesityPhysicalEditionClusterCreate(d *schema.ResourceData, m inte
 	}
 	result, err := client.Clusters().CreatePhysicalCluster(&requestBody)
 	if err != nil {
-		return errors.New("Failed to create Physical edition cluster")
+		log.Printf(err.Error())
+		return errors.New("Failed to create physical edition cluster")
 	}
 	log.Printf("[INFO] Create request for physical edition cluster (%s) successful", clusterName)
-	var timeout = d.Get("operation_timeout").(int) * 60
+	var timeout = resourceData.Get("operation_timeout").(int) * WaitTimeToSeconds
 	for timeout > 0 {
 		result, err2 := client.Cluster().GetBasicClusterInfo()
 		if err2 == nil && result.Name != nil {
@@ -251,65 +256,73 @@ func resourceCohesityPhysicalEditionClusterCreate(d *schema.ResourceData, m inte
 		timeout -= 30
 	}
 
-	client, err = CohesityManagementSdk.NewCohesitySdkClient(cohesityConfig.cohesityVip, cohesityConfig.cohesityUserName, cohesityConfig.cohesityPassword, cohesityConfig.cohesityDomain)
+	client, err = CohesityManagementSdk.NewCohesitySdkClient(cohesityConfig.clusterVip,
+		cohesityConfig.clusterUsername, cohesityConfig.clusterPassword, cohesityConfig.clusterDomain)
+
 	if err != nil {
+		log.Printf(err.Error())
 		return errors.New("Failed to authenticate with Cohesity")
 	}
 
 	var requestBodyLicence models.LicenceClusterParameters
 	signedTime := int64(time.Now().Unix())
 	signedVersion := int64(2)
-	requestBodyLicence.LicenseKey = d.Get("licence_key").(string)
-	requestBodyLicence.SignedByUser = cohesityConfig.cohesityUserName
+	requestBodyLicence.LicenseKey = resourceData.Get("licence_key").(string)
+	requestBodyLicence.SignedByUser = cohesityConfig.clusterUsername
 	requestBodyLicence.SignedVersion = &signedVersion
 	requestBodyLicence.SignedTime = &signedTime
 
 	err = client.Clusters().ApplyClusterLicence(&requestBodyLicence)
 
 	if err != nil {
-		log.Printf("[WARNING] Failed to apply licence for physical edition cluster %s", clusterName)
-		d.Set("licence_key", "")
+		log.Printf("[WARNING] Failed to apply licence for physical edition cluster %s, %s", clusterName, err.Error())
+		resourceData.Set("licence_key", "")
 	}
 	strconv.FormatInt(*result.ClusterId, 10)
 	log.Printf("[INFO] Successfully created and applied licence to physical edition cluster %s", clusterName)
-	return resourceCohesityVirtualEditionClusterRead(d, m)
+	return resourceCohesityPhysicalEditionClusterRead(resourceData, configMetaData)
 }
 
-func resourceCohesityPhysicalEditionClusterRead(d *schema.ResourceData, m interface{}) error {
-	var clusterName = d.Get("cluster_name").(string)
-	var cohesityConfig = m.(Config)
-	client, err := CohesityManagementSdk.NewCohesitySdkClient(cohesityConfig.cohesityVip, cohesityConfig.cohesityUserName, cohesityConfig.cohesityPassword, cohesityConfig.cohesityDomain)
+func resourceCohesityPhysicalEditionClusterRead(resourceData *schema.ResourceData, configMetaData interface{}) error {
+	var clusterName = resourceData.Get("cluster_name").(string)
+	var cohesityConfig = configMetaData.(Config)
+	client, err := CohesityManagementSdk.NewCohesitySdkClient(cohesityConfig.clusterVip,
+		cohesityConfig.clusterUsername, cohesityConfig.clusterPassword, cohesityConfig.clusterDomain)
 	if err != nil {
+		log.Printf(err.Error())
 		return errors.New("Failed to authenticate with Cohesity")
 	}
 
 	result, err := client.Cluster().GetBasicClusterInfo()
 	if err == nil && result.Name == nil {
 		log.Printf("[INFO] %s physical edition cluster doesn't exist", clusterName)
-		d.SetId("")
+		resourceData.SetId("")
 	}
 	return nil
 }
 
-func resourceCohesityPhysicalEditionClusterDelete(d *schema.ResourceData, m interface{}) error {
-	var clusterName = d.Get("cluster_name").(string)
-	log.Printf("[INFO] Destroy virtual edition cluster: %s", clusterName)
-	var cohesityConfig = m.(Config)
-	client, err := CohesityManagementSdk.NewCohesitySdkClient(cohesityConfig.cohesityVip, cohesityConfig.cohesityUserName, cohesityConfig.cohesityPassword, cohesityConfig.cohesityDomain)
+func resourceCohesityPhysicalEditionClusterDelete(resourceData *schema.ResourceData, configMetaData interface{}) error {
+	var clusterName = resourceData.Get("cluster_name").(string)
+	log.Printf("[INFO] Destroy physical edition cluster: %s", clusterName)
+	var cohesityConfig = configMetaData.(Config)
+	client, err := CohesityManagementSdk.NewCohesitySdkClient(cohesityConfig.clusterVip,
+		cohesityConfig.clusterUsername, cohesityConfig.clusterPassword, cohesityConfig.clusterDomain)
 	if err != nil {
+		log.Printf(err.Error())
 		return errors.New("Failed to authenticate with Cohesity")
 	}
 
 	destroyErr := client.Clusters().DestroyCluster()
 	if destroyErr != nil {
-		return errors.New("Failed to destroy Physical edition cluster")
+		log.Printf(destroyErr.Error())
+		return errors.New("Failed to destroy physical edition cluster")
 	}
-	log.Printf("[INFO] Destroy request for virtual edition cluster (%s) successful", clusterName)
-	var timeout = d.Get("operation_timeout").(int) * 60
+	log.Printf("[INFO] Destroy request for physical edition cluster (%s) successful", clusterName)
+	var timeout = resourceData.Get("operation_timeout").(int) * WaitTimeToSeconds
 	for timeout > 0 {
 		result, infoErr := client.Cluster().GetBasicClusterInfo()
 		if infoErr == nil && result.Name == nil {
-			log.Printf("[INFO] Destroyed Virtual edition cluster: %s", clusterName)
+			log.Printf("[INFO] Destroyed physical edition cluster: %s", clusterName)
 			break
 		}
 		time.Sleep(30 * time.Second)
@@ -318,31 +331,34 @@ func resourceCohesityPhysicalEditionClusterDelete(d *schema.ResourceData, m inte
 	return nil
 }
 
-func resourceCohesityPhysicalEditionClusterUpdate(d *schema.ResourceData, m interface{}) error {
-	var clusterName = d.Get("cluster_name").(string)
+func resourceCohesityPhysicalEditionClusterUpdate(resourceData *schema.ResourceData, configMetaData interface{}) error {
+	var clusterName = resourceData.Get("cluster_name").(string)
 	log.Printf("[INFO] Update physical edition cluster: %s", clusterName)
-	d.Partial(true)
-	var cohesityConfig = m.(Config)
-	client, err := CohesityManagementSdk.NewCohesitySdkClient(cohesityConfig.cohesityVip, cohesityConfig.cohesityUserName, cohesityConfig.cohesityPassword, cohesityConfig.cohesityDomain)
+	resourceData.Partial(true)
+	var cohesityConfig = configMetaData.(Config)
+	client, err := CohesityManagementSdk.NewCohesitySdkClient(cohesityConfig.clusterVip,
+		cohesityConfig.clusterUsername, cohesityConfig.clusterPassword, cohesityConfig.clusterDomain)
 	if err != nil {
+		log.Printf(err.Error())
 		return errors.New("Failed to authenticate with Cohesity")
 	}
-	oldLicenceValue, _ := d.GetChange("licence_key")
-	if d.HasChange("licence_key") && oldLicenceValue == "" {
+	oldLicenceValue, _ := resourceData.GetChange("licence_key")
+	if resourceData.HasChange("licence_key") && oldLicenceValue == "" {
 		var requestBodyLicence models.LicenceClusterParameters
 		signedTime := int64(time.Now().Unix())
 		signedVersion := int64(2)
-		requestBodyLicence.LicenseKey = d.Get("licence_key").(string)
-		requestBodyLicence.SignedByUser = cohesityConfig.cohesityUserName
+		requestBodyLicence.LicenseKey = resourceData.Get("licence_key").(string)
+		requestBodyLicence.SignedByUser = cohesityConfig.clusterUsername
 		requestBodyLicence.SignedVersion = &signedVersion
 		requestBodyLicence.SignedTime = &signedTime
 		err := client.Clusters().ApplyClusterLicence(&requestBodyLicence)
 		if err != nil {
-			return errors.New("Failed to update Physical edition cluster")
+			log.Printf(err.Error())
+			return errors.New("Failed to update physical edition cluster")
 		}
-		d.SetPartial("licence_key")
+		resourceData.SetPartial("licence_key")
 		log.Printf("[INFO] Applied licence to physical edition cluster: %s", clusterName)
-		return resourceCohesityVirtualEditionClusterRead(d, m)
+		return resourceCohesityPhysicalEditionClusterRead(resourceData, configMetaData)
 	}
-	return errors.New("Failed to update Physical edition cluster")
+	return errors.New("Failed to update physical edition cluster")
 }
