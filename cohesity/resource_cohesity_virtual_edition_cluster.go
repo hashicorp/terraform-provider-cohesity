@@ -145,7 +145,7 @@ func resourceCohesityVirtualEditionClusterCreate(resourceData *schema.ResourceDa
 	var encryptionKeysRotationPeriod = int64(resourceData.Get("encryption_keys_rotation_period").(int))
 	var clusterGateway = resourceData.Get("cluster_gateway").(string)
 	var clusterSubnetMask = resourceData.Get("cluster_subnet_mask").(string)
-	//var vipHostName = resourceData.Get("virtual_ip_hostname").(string)
+	var vipHostName = resourceData.Get("virtual_ip_hostname").(string)
 
 	log.Printf("[INFO] Create virtual edition cluster: %s", clusterName)
 
@@ -163,11 +163,11 @@ func resourceCohesityVirtualEditionClusterCreate(resourceData *schema.ResourceDa
 	for i, dns := range resourceData.Get("dns_servers").(*schema.Set).List() {
 		dnsServers[i] = dns.(string)
 	}
-	/*
-		vips := make([]string, resourceData.Get("virtual_ips").(*schema.Set).Len())
-		for i, vip := range resourceData.Get("virtual_ips").(*schema.Set).List() {
-			vips[i] = vip.(string)
-		}*/
+
+	vips := make([]string, resourceData.Get("virtual_ips").(*schema.Set).Len())
+	for i, vip := range resourceData.Get("virtual_ips").(*schema.Set).List() {
+		vips[i] = vip.(string)
+	}
 
 	nodeConfigs := make([]*models.VirtualNodeConfiguration, resourceData.Get("node_configs").(*schema.Set).Len())
 	for i, config := range resourceData.Get("node_configs").(*schema.Set).List() {
@@ -195,8 +195,8 @@ func resourceCohesityVirtualEditionClusterCreate(resourceData *schema.ResourceDa
 		DnsServers:        &dnsServers,
 		DomainNames:       &domainNames,
 		NtpServers:        &ntpServers,
-		//VipHostname:       &vipHostName,
-		//Vips: &vips,
+		VipHostname:       &vipHostName,
+		Vips:              &vips,
 	}
 	result, err := client.Clusters().CreateVirtualCluster(&requestBody)
 	if err != nil {
