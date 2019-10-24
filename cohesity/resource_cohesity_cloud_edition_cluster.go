@@ -198,7 +198,7 @@ func resourceCohesityCloudEditionClusterCreate(resourceData *schema.ResourceData
 		resourceData.Set("licence_key", "")
 	}
 	log.Printf("[INFO] Successfully created and applied licence to cloud edition cluster %s", clusterName)
-	strconv.FormatInt(*result.ClusterId, 10)
+	resourceData.SetId(strconv.FormatInt(*result.ClusterId, 10))
 	return resourceCohesityCloudEditionClusterRead(resourceData, configMetaData)
 }
 

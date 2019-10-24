@@ -278,7 +278,7 @@ func resourceCohesityPhysicalEditionClusterCreate(resourceData *schema.ResourceD
 		log.Printf("[WARNING] Failed to apply licence for physical edition cluster %s, %s", clusterName, err.Error())
 		resourceData.Set("licence_key", "")
 	}
-	strconv.FormatInt(*result.ClusterId, 10)
+	resourceData.SetId(strconv.FormatInt(*result.ClusterId, 10))
 	log.Printf("[INFO] Successfully created and applied licence to physical edition cluster %s", clusterName)
 	return resourceCohesityPhysicalEditionClusterRead(resourceData, configMetaData)
 }
