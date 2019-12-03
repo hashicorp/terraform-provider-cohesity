@@ -23,7 +23,7 @@ func TestAccVirtualEditionCluster(t *testing.T) {
 					resource.TestCheckResourceAttr("cohesity_virtual_edition_cluster.virtual", "cluster_name",
 						"AcceptanceTestTerraformVirtaulEditionCluster"),
 					resource.TestCheckResourceAttr("cohesity_virtual_edition_cluster.virtual", "enable_encryption", "true"),
-					resource.TestCheckResourceAttr("cohesity_virtual_edition_cluster.virtual", "cluster_gateway", "10.2.32.1"),
+					resource.TestCheckResourceAttr("cohesity_virtual_edition_cluster.virtual", "cluster_gateway", "10.2.144.1"),
 					resource.TestCheckResourceAttr("cohesity_virtual_edition_cluster.virtual", "enable_fips_mode", "true"),
 					resource.TestCheckResourceAttr("cohesity_virtual_edition_cluster.virtual", "metadata_fault_tolerance", "0"),
 					resource.TestCheckResourceAttr("cohesity_virtual_edition_cluster.virtual", "virtual_ip_hostname", "test"),
@@ -77,7 +77,7 @@ func testAccVirtualEditionClusterExists() resource.TestCheckFunc {
 
 const testAccVirtualEditionClusterConfig = `
 provider "cohesity" {
-	cluster_vip = "10.2.33.137"
+	cluster_vip = "10.2.145.27"
 	cluster_username = "admin"
 	cluster_domain = "LOCAL"
 }
@@ -88,16 +88,13 @@ resource "cohesity_virtual_edition_cluster" "virtual"{
 		ntp_servers = ["time.google.com"]
 		domain_names = ["eng.cohesity.com"]
 		cluster_subnet_mask = "255.255.240.0"
-		cluster_gateway = "10.2.32.1"
+		cluster_gateway = "10.2.144.1"
 		enable_encryption = true
 		enable_fips_mode = true
 		encryption_keys_rotation_period = 1
 		metadata_fault_tolerance = 0
-		virtual_ips = ["10.2.33.137"]
+		virtual_ips = ["10.2.145.27"]
 		virtual_ip_hostname = "test"
-		node_configs {
-					node_ip="10.2.33.137"
-					node_id=12
-					}
+		node_ips = ["10.2.145.27"]
 }
 `

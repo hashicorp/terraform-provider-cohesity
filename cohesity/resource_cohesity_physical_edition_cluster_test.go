@@ -77,7 +77,7 @@ func testAccPhysicalEditionClusterExists() resource.TestCheckFunc {
 
 const testAccPhysicalEditionClusterConfig = `
 provider "cohesity" {
-	cluster_vip = "10.9.33.133"
+	cluster_vip = "10.9.33.113"
 	cluster_username = "admin"
 	cluster_domain = "LOCAL"
 }
@@ -99,19 +99,16 @@ resource "cohesity_physical_edition_cluster" "physical"{
 		virtual_ip_hostname = "test"
 		ipmi_username="cohesity"
 		node_configs {
-					node_ip="10.9.33.133"
-					node_id=12
-					node_ipmi_ip="10.9.33.133"
+					node_ip="10.9.33.113"
+					node_ipmi_ip="10.9.33.113"
 					}
 		node_configs {
-					node_ip="10.9.33.134"
-					node_id=13
-					node_ipmi_ip="10.9.33.134"
+					node_ip="10.9.33.114"
+					node_ipmi_ip="10.9.33.114"
 					}
 		node_configs {
-					node_ip="10.9.33.135"
-					node_id=14
-					node_ipmi_ip="10.9.33.135"
+					node_ip="10.9.33.115"
+					node_ipmi_ip="10.9.33.115"
 					}
 }
 `

@@ -139,12 +139,6 @@ func resourceCohesityPhysicalEditionCluster() *schema.Resource {
 							Required:    true,
 							Description: "IP address for this node",
 						},
-						"node_id": {
-							Type:        schema.TypeInt,
-							Optional:    true,
-							Default:     1,
-							Description: "Id for this node",
-						},
 						"node_ipmi_ip": {
 							Type:        schema.TypeString,
 							Required:    true,
@@ -205,10 +199,8 @@ func resourceCohesityPhysicalEditionClusterCreate(resourceData *schema.ResourceD
 	for i, config := range resourceData.Get("node_configs").(*schema.Set).List() {
 		nodeConfig := config.(map[string]interface{})
 		nodeIP := nodeConfig["node_ip"].(string)
-		nodeID := int64(nodeConfig["node_id"].(int))
 		NodeIpmiIP := nodeConfig["node_ipmi_ip"].(string)
 		nodeConfigs[i] = &models.PhysicalNodeConfiguration{
-			NodeId:     &nodeID,
 			NodeIp:     &nodeIP,
 			NodeIpmiIp: &NodeIpmiIP,
 		}

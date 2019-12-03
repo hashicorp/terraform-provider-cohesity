@@ -105,25 +105,12 @@ func resourceCohesityVirtualEditionCluster() *schema.Resource {
 				Required:    true,
 				Description: "The virtual IP hostname",
 			},
-			"node_configs": {
+			"node_ips": {
 				Type:        schema.TypeSet,
 				Required:    true,
-				Description: "The configuration for the nodes in the new cluster",
-				Elem: &schema.Resource{
-					Schema: map[string]*schema.Schema{
-						"node_ip": {
-							Type:        schema.TypeString,
-							Required:    true,
-							Description: "IP address of the node",
-						},
-						"node_id": {
-							Type:        schema.TypeInt,
-							Optional:    true,
-							Default:     1,
-							Description: "Id for this node",
-						},
-					},
-				},
+				Elem:        &schema.Schema{Type: schema.TypeString},
+				Set:         schema.HashString,
+				Description: "IP addresses of the nodes in the cluster",
 			},
 		},
 	}
@@ -169,13 +156,10 @@ func resourceCohesityVirtualEditionClusterCreate(resourceData *schema.ResourceDa
 		vips[i] = vip.(string)
 	}
 
-	nodeConfigs := make([]*models.VirtualNodeConfiguration, resourceData.Get("node_configs").(*schema.Set).Len())
-	for i, config := range resourceData.Get("node_configs").(*schema.Set).List() {
-		nodeConfig := config.(map[string]interface{})
-		nodeIP := nodeConfig["node_ip"].(string)
-		nodeID := int64(nodeConfig["node_id"].(int))
+	nodeConfigs := make([]*models.VirtualNodeConfiguration, resourceData.Get("node_ips").(*schema.Set).Len())
+	for i, ip := range resourceData.Get("node_ips").(*schema.Set).List() {
+		nodeIP := ip.(string)
 		nodeConfigs[i] = &models.VirtualNodeConfiguration{
-			NodeId: &nodeID,
 			NodeIp: &nodeIP,
 		}
 	}

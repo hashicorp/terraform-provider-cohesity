@@ -80,10 +80,7 @@ After setting the environment variables <br>
                 metadata_fault_tolerance = 0
                 virtual_ips = ["10.2.35.147"]
                 virtual_ip_hostname = "test"
-                node_configs {
-                            node_ip="10.2.35.147"
-                            node_id=12
-                            }
+                node_ips = ["10.2.35.147"]
     }
 
     ```
@@ -151,20 +148,7 @@ resource "cohesity_virtual_edition_cluster" "virtual"{
             metadata_fault_tolerance = 0
             virtual_ips = ["10.2.33.40"]
             virtual_ip_hostname = "test"
-            node_configs {
-                        node_ip="10.2.33.199"
-                        node_id=11
-                        }
-
-            node_configs {
-                        node_ip="10.2.33.198"
-                        node_id=12
-                        }
-
-            node_configs {
-                        node_ip="10.2.33.197"
-                        node_id=13
-                        }
+            node_ips = ["10.2.33.199", "10.2.33.198", "10.2.33.197"]
 }
 
 ```
@@ -185,9 +169,7 @@ The following arguments are supported:
 - virtual_ips - (Required, set of strings) The virtauls IPs for the new cluster
 - operation_timeout - (Optional, int) The time to wait in minutes for cluster creation or destruction. The default value is **120 minutes**
 - virtual_ip_hostname - (Required, string) The virtual IP hostname
-- node_configs - (Required, block) node_configs is a block within the configuration to configure the nodes in the cluster. The block can be repeated to configure multiple nodes in the cluster. Each block supports the following:
-   - node_ip - (Required, string) IP address of the node
-   - node_id - (Required, int) Id for this node
+- node_ips - (Required, set of strings) IP addresses of the nodes in the cluster
 
 #### Attributes Reference
 The following attributes are exported:
@@ -269,17 +251,14 @@ resource "cohesity_virtual_edition_cluster" "physical"{
             ipmi_username="cohesity"
             node_configs {
                         node_ip="10.9.33.133"
-                        node_id=12
                         node_ipmi_ip="10.9.33.133"
                         }
             node_configs {
                         node_ip="10.9.33.134"
-                        node_id=13
                         node_ipmi_ip="10.9.33.134"
                         }
             node_configs {
                         node_ip="10.9.33.135"
-                        node_id=14
                         node_ipmi_ip="10.9.33.135"
                         }
 }
@@ -307,7 +286,6 @@ The following arguments are supported:
 - ipmi_subnet_mask - (Required, string) The subnet mask for the IPMI network
 - node_configs - (Required, block) node_configs is a block within the configuration to configure the nodes in the cluster. The block can be repeated to configure multiple nodes in the cluster. Each block supports the following:
    - node_ip - (Required, string) IP address of the node
-   - node_id - (Required, int) Id for this node
    - node_ipmi_ip - (Required, string) IPMI IP for this node
 
 #### Attributes Reference
