@@ -60,6 +60,8 @@ github.com/bgentry/go-netrc/netrc
 github.com/bgentry/speakeasy
 # github.com/blang/semver v3.5.1+incompatible
 github.com/blang/semver
+# github.com/bmatcuk/doublestar v1.1.5
+github.com/bmatcuk/doublestar
 # github.com/cohesity/management-sdk-go v1.1.2
 github.com/cohesity/management-sdk-go/managementsdk
 github.com/cohesity/management-sdk-go/models
@@ -124,6 +126,8 @@ github.com/google/go-cmp/cmp/internal/diff
 github.com/google/go-cmp/cmp/internal/flags
 github.com/google/go-cmp/cmp/internal/function
 github.com/google/go-cmp/cmp/internal/value
+# github.com/google/uuid v1.1.1
+github.com/google/uuid
 # github.com/googleapis/gax-go/v2 v2.0.5
 github.com/googleapis/gax-go/v2
 # github.com/hashicorp/errwrap v1.0.0
@@ -160,31 +164,23 @@ github.com/hashicorp/hcl/json/scanner
 github.com/hashicorp/hcl/json/token
 # github.com/hashicorp/hcl/v2 v2.3.0
 github.com/hashicorp/hcl/v2
+github.com/hashicorp/hcl/v2/hcldec
+github.com/hashicorp/hcl/v2/hclsyntax
+github.com/hashicorp/hcl/v2/ext/customdecode
 github.com/hashicorp/hcl/v2/gohcl
 github.com/hashicorp/hcl/v2/hclparse
-github.com/hashicorp/hcl/v2/hclsyntax
+github.com/hashicorp/hcl/v2/ext/typeexpr
+github.com/hashicorp/hcl/v2/ext/dynblock
+github.com/hashicorp/hcl/v2/ext/tryfunc
 github.com/hashicorp/hcl/v2/hclwrite
 github.com/hashicorp/hcl/v2/json
-github.com/hashicorp/hcl/v2/ext/customdecode
-# github.com/hashicorp/hcl2 v0.0.0-20190702185634-5b39d9ff3a9a
-github.com/hashicorp/hcl2/hcl
-github.com/hashicorp/hcl2/hcl/hclsyntax
-github.com/hashicorp/hcl2/hcldec
-github.com/hashicorp/hcl2/gohcl
-github.com/hashicorp/hcl2/hclparse
-github.com/hashicorp/hcl2/ext/typeexpr
-github.com/hashicorp/hcl2/ext/dynblock
-github.com/hashicorp/hcl2/hclwrite
-github.com/hashicorp/hcl2/hcl/json
-github.com/hashicorp/hcl2/hcled
+github.com/hashicorp/hcl/v2/hcled
 # github.com/hashicorp/hil v0.0.0-20190212112733-ab17b08d6590
-github.com/hashicorp/hil
 github.com/hashicorp/hil/ast
+github.com/hashicorp/hil
 github.com/hashicorp/hil/parser
 github.com/hashicorp/hil/scanner
-# github.com/hashicorp/logutils v1.0.0
-github.com/hashicorp/logutils
-# github.com/hashicorp/terraform v0.12.4
+# github.com/hashicorp/terraform v0.12.20
 github.com/hashicorp/terraform/plugin
 github.com/hashicorp/terraform/helper/schema
 github.com/hashicorp/terraform/terraform
@@ -195,17 +191,15 @@ github.com/hashicorp/terraform/plugin/convert
 github.com/hashicorp/terraform/plugin/discovery
 github.com/hashicorp/terraform/providers
 github.com/hashicorp/terraform/provisioners
-github.com/hashicorp/terraform/version
-github.com/hashicorp/terraform/config
-github.com/hashicorp/terraform/config/hcl2shim
+github.com/hashicorp/terraform/configs/hcl2shim
 github.com/hashicorp/terraform/helper/hashcode
 github.com/hashicorp/terraform/tfdiags
 github.com/hashicorp/terraform/addrs
-github.com/hashicorp/terraform/config/module
+github.com/hashicorp/terraform/config
 github.com/hashicorp/terraform/configs
 github.com/hashicorp/terraform/dag
-github.com/hashicorp/terraform/flatmap
 github.com/hashicorp/terraform/helper/didyoumean
+github.com/hashicorp/terraform/helper/logging
 github.com/hashicorp/terraform/httpclient
 github.com/hashicorp/terraform/lang
 github.com/hashicorp/terraform/moduledeps
@@ -213,25 +207,28 @@ github.com/hashicorp/terraform/plans
 github.com/hashicorp/terraform/plans/objchange
 github.com/hashicorp/terraform/states
 github.com/hashicorp/terraform/states/statefile
+github.com/hashicorp/terraform/version
 github.com/hashicorp/terraform/helper/resource
 github.com/hashicorp/terraform/registry
 github.com/hashicorp/terraform/registry/regsrc
 github.com/hashicorp/terraform/registry/response
-github.com/hashicorp/terraform/svchost/disco
 github.com/hashicorp/terraform/helper/hilmapstructure
+github.com/hashicorp/terraform/experiments
 github.com/hashicorp/terraform/lang/blocktoattr
 github.com/hashicorp/terraform/lang/funcs
 github.com/hashicorp/terraform/command/format
 github.com/hashicorp/terraform/configs/configload
 github.com/hashicorp/terraform/helper/config
-github.com/hashicorp/terraform/helper/logging
 github.com/hashicorp/terraform/internal/initwd
-github.com/hashicorp/terraform/svchost
-github.com/hashicorp/terraform/svchost/auth
 github.com/hashicorp/terraform/internal/modsdir
+github.com/hashicorp/terraform/flatmap
 github.com/hashicorp/terraform/internal/earlyconfig
 # github.com/hashicorp/terraform-config-inspect v0.0.0-20191212124732-c6ae6269b9d7
 github.com/hashicorp/terraform-config-inspect/tfconfig
+# github.com/hashicorp/terraform-svchost v0.0.0-20191011084731-65d371908596
+github.com/hashicorp/terraform-svchost/disco
+github.com/hashicorp/terraform-svchost
+github.com/hashicorp/terraform-svchost/auth
 # github.com/hashicorp/yamux v0.0.0-20180604194846-3520598351bb
 github.com/hashicorp/yamux
 # github.com/jmespath/go-jmespath v0.0.0-20180206201540-c2b33e8439af
@@ -308,14 +305,14 @@ go.opencensus.io/metric/metricproducer
 go.opencensus.io/resource
 # golang.org/x/crypto v0.0.0-20190701094942-4def268fd1a4
 golang.org/x/crypto/openpgp
-golang.org/x/crypto/bcrypt
 golang.org/x/crypto/openpgp/armor
 golang.org/x/crypto/openpgp/errors
 golang.org/x/crypto/openpgp/packet
 golang.org/x/crypto/openpgp/s2k
-golang.org/x/crypto/blowfish
+golang.org/x/crypto/bcrypt
 golang.org/x/crypto/cast5
 golang.org/x/crypto/openpgp/elgamal
+golang.org/x/crypto/blowfish
 # golang.org/x/net v0.0.0-20191009170851-d66e71096ffb
 golang.org/x/net/context
 golang.org/x/net/trace
@@ -327,8 +324,8 @@ golang.org/x/net/http/httpguts
 golang.org/x/net/context/ctxhttp
 # golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
 golang.org/x/oauth2
-golang.org/x/oauth2/google
 golang.org/x/oauth2/internal
+golang.org/x/oauth2/google
 golang.org/x/oauth2/jws
 golang.org/x/oauth2/jwt
 # golang.org/x/sys v0.0.0-20190804053845-51ab0e2deafa
@@ -374,9 +371,10 @@ google.golang.org/grpc
 google.golang.org/grpc/credentials
 google.golang.org/grpc/health
 google.golang.org/grpc/health/grpc_health_v1
+google.golang.org/grpc/codes
+google.golang.org/grpc/status
 google.golang.org/grpc/balancer
 google.golang.org/grpc/balancer/roundrobin
-google.golang.org/grpc/codes
 google.golang.org/grpc/connectivity
 google.golang.org/grpc/encoding
 google.golang.org/grpc/encoding/proto
@@ -398,7 +396,6 @@ google.golang.org/grpc/resolver
 google.golang.org/grpc/resolver/dns
 google.golang.org/grpc/resolver/passthrough
 google.golang.org/grpc/stats
-google.golang.org/grpc/status
 google.golang.org/grpc/tap
 google.golang.org/grpc/test/bufconn
 google.golang.org/grpc/credentials/internal
