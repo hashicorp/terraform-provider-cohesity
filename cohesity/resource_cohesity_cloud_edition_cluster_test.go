@@ -11,22 +11,24 @@ import (
 	"github.com/hashicorp/terraform/terraform"
 )
 
-func TestAccCloudEditionCluster(t *testing.T) {
+func TestAccCloudEditionCluster_basic(t *testing.T) {
 	resource.Test(t, resource.TestCase{
 		Providers:    testAccProviders,
 		CheckDestroy: testAccCheckCloudEditionClusterDestroy,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccCloudEditionClusterConfig,
+				Config: fmt.Sprintf(testAccCloudEditionClusterConfig, cloudEditionDNSServer,
+					cloudEditionDomainName, cloudEditionClusterSubnetMask, cloudEditionClusterGateway,
+					cloudEditionClusterNodeIP1, cloudEditionClusterNodeIP2, cloudEditionClusterNodeIP3),
 				Check: resource.ComposeTestCheckFunc(
 					testAccCloudEditionClusterExists(),
 					resource.TestCheckResourceAttr("cohesity_cloud_edition_cluster.cloud", "cluster_name",
 						"AcceptanceTestTerraformCloudEditionCluster"),
 					resource.TestCheckResourceAttr("cohesity_cloud_edition_cluster.cloud", "enable_encryption", "true"),
-					resource.TestCheckResourceAttr("cohesity_cloud_edition_cluster.cloud", "cluster_gateway", "10.2.32.1"),
+					resource.TestCheckResourceAttr("cohesity_cloud_edition_cluster.cloud", "cluster_gateway", cloudEditionClusterGateway),
 					resource.TestCheckResourceAttr("cohesity_cloud_edition_cluster.cloud", "enable_fips_mode", "true"),
 					resource.TestCheckResourceAttr("cohesity_cloud_edition_cluster.cloud", "metadata_fault_tolerance", "0"),
-					resource.TestCheckResourceAttr("cohesity_cloud_edition_cluster.cloud", "cluster_subnet_mask", "255.255.240.0"),
+					resource.TestCheckResourceAttr("cohesity_cloud_edition_cluster.cloud", "cluster_subnet_mask", cloudEditionClusterSubnetMask),
 					resource.TestCheckResourceAttr("cohesity_cloud_edition_cluster.cloud", "encryption_keys_rotation_period", "1"),
 				),
 			},
@@ -75,23 +77,17 @@ func testAccCloudEditionClusterExists() resource.TestCheckFunc {
 }
 
 const testAccCloudEditionClusterConfig = `
-provider "cohesity" {
-	cluster_vip = "10.2.45.143"
-	cluster_username = "admin"
-	cluster_domain = "LOCAL"
-}
-
 resource "cohesity_cloud_edition_cluster" "cloud"{
 		cluster_name = "AcceptanceTestTerraformCloudEditionCluster"
-		dns_servers = ["10.2.145.14"]
+		dns_servers = ["%s"]
 		ntp_servers = ["time.google.com"]
-		domain_names = ["eng.cohesity.com"]
-		cluster_subnet_mask = "255.255.240.0"
-		cluster_gateway = "10.2.32.1"
+		domain_names = ["%s"]
+		cluster_subnet_mask = "%s"
+		cluster_gateway = "%s"
 		enable_encryption = true
 		enable_fips_mode = true
 		encryption_keys_rotation_period = 1
 		metadata_fault_tolerance = 0
-		node_ips = ["10.2.45.143", "10.2.45.144", "10.2.45.145"]        
+		node_ips = ["%s", "%s", "%s"]        
 }
 `

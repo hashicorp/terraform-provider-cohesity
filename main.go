@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/cohesity/terraform-provider-cohesity/cohesity"
 	"github.com/hashicorp/terraform/plugin"
+	"github.com/terraform-providers/terraform-provider-cohesity/cohesity"
 )
 
 func main() {
