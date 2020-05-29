@@ -17,6 +17,7 @@ Requirements
 
 -	[Terraform](https://www.terraform.io/downloads.html) 0.12.20+
 -	[Go](https://golang.org/doc/install) 1.12.6+ (to build the provider plugin)
+-   Cohesity DataPlatform 6.4+
 
 Building The Provider
 ---------------------
