@@ -36,7 +36,7 @@ resource "cohesity_cloud_edition_cluster" "cloud"{
 
 The following arguments are supported:
 - cluster_name - (Required, string) The name of the new Cloud edition cluster
-- licence_key - (Required, string) Cohesity licence key to apply after cluster creation. This can also be read from **CLOUD_COHESITY_CLUSTER_LICENCE_KEY** environment variable 
+- license_key - (Required, string) Cohesity license key to apply after cluster creation. This can also be read from **CLOUD_COHESITY_CLUSTER_LICENSE_KEY** environment variable 
 - metadata_fault_tolerance - (Optional, int) The metadata fault tolerance. Default value is **0**
 - enable_encryption - (Optional, bool) Specifies whether or not to enable encryption. If encryption is enabled, all data on the cluster will be encrypted. Default value is **true**
 - enable_fips_mode - (Optional, bool) Specifies whether or not to enable FIPS mode. This must be set to true in order to enable FIPS. Default value is **true**
