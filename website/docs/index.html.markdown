@@ -1,5 +1,5 @@
 ---
-layout: "Cohesity"
+layout: "cohesity"
 page_title: "Provider: Cohesity"
 description: |-
   The Cohesity terraform provider is used to interact with cohesity and automate cluster workflows using Cohesity REST API's.
