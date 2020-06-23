@@ -35,6 +35,7 @@ resource "cohesity_cloud_edition_cluster" "cloud"{
 ## Argument Reference
 
 The following arguments are supported:
+
 - cluster_name - (Required, string) The name of the new Cloud edition cluster
 - license_key - (Required, string) Cohesity license key to apply after cluster creation. This can also be read from **CLOUD_COHESITY_CLUSTER_LICENSE_KEY** environment variable 
 - metadata_fault_tolerance - (Optional, int) The metadata fault tolerance. Default value is **0**
@@ -52,4 +53,5 @@ The following arguments are supported:
 #### Attributes Reference
 
 The following attributes are exported:
+
 - id - ID of the cluster
