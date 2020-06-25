@@ -253,6 +253,7 @@ func resourceCohesityJobVMwareCreate(resourceData *schema.ResourceData, configMe
 	requestBody.PolicyId = policyID
 	requestBody.ViewBoxId = storageDomainID
 	requestBody.Timezone = &timezone
+	requestBody.Environment = models.EnvironmentProtectionJobRequestBody_KVMWARE
 
 	//set the qos type
 	log.Printf("[INFO] Set the qos type for the protection job")
