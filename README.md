@@ -27,7 +27,7 @@ This provider plugin is maintained by [Cohesity](https://www.cohesity.com/)
 
 -	[Terraform](https://www.terraform.io/downloads.html) 0.12.20+
 -	[Go](https://golang.org/doc/install) 1.12.6+ (to build the provider plugin)
--   [Cohesity](https://www.cohesity.com/) DataPlatform 6.4
+-   [Cohesity](https://www.cohesity.com/) DataPlatform 6.4+
 
 ## Building The Provider :pencil2:
 ---------------------
