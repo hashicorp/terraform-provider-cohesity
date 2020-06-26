@@ -1,4 +1,4 @@
-Terraform Provider for Cohesity
+# Terraform Provider for Cohesity
 
 - Website: https://www.terraform.io
 - [![Gitter chat](https://badges.gitter.im/hashicorp-terraform/Lobby.png)](https://gitter.im/hashicorp-terraform/Lobby)
@@ -6,7 +6,7 @@ Terraform Provider for Cohesity
 
 <img src="https://cdn.rawgit.com/hashicorp/terraform-website/master/content/source/assets/images/logo-hashicorp.svg" width="600px">
 
-Maintainers
+## Maintainers
 
 This provider plugin is maintained by [Cohesity](https://www.cohesity.com/)
 
