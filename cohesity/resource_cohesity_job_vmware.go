@@ -197,7 +197,8 @@ func resourceCohesityJobVMwareCreate(resourceData *schema.ResourceData, configMe
 		return errors.New("Error in getting the protection source")
 	}
 	for _, source := range sources {
-		if *source.ProtectionSource.Name == protectionSource {
+		if *source.ProtectionSource.Name == protectionSource ||
+			*source.RegistrationInfo.AccessInfo.Endpoint == protectionSource {
 			protectionSourceID = *source.ProtectionSource.Id
 		}
 	}

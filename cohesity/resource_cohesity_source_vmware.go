@@ -189,7 +189,8 @@ func resourceCohesitySourceVMwareRead(resourceData *schema.ResourceData, configM
 		ListProtectionSources(nil, nil, nil, &trueValue, &trueValue,
 			&trueValue, environmentType, nil, nil, nil, nil, nil)
 	for _, protectionSource := range result {
-		if *protectionSource.ProtectionSource.Name == endpoint {
+		if *protectionSource.ProtectionSource.Name == endpoint ||
+			*protectionSource.RegistrationInfo.AccessInfo.Endpoint == endpoint {
 			log.Printf("[INFO] Found the VMware protection source %s on cohesity cluster",
 				*protectionSource.ProtectionSource.Name)
 			return nil
