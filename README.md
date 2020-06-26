@@ -77,6 +77,6 @@ $ make testacc TEST=./cohesity TESTARGS='-run=TestAccVirtualEditionCluster_basic
 * [Refer our contribution guideline](./CONTRIBUTING.md).
 
 
-## <a name ="suggest"></a> Questions or Feedback :raised_hand:
+## <a name ="suggest"></a> Suggestions or Feedback :raised_hand:
 
 We would love to hear from you. Please send your questions and feedback to: *cohesity-api-sdks@cohesity.com*
