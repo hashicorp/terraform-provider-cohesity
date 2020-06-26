@@ -2,12 +2,12 @@
 layout: "cohesity"
 page_title: "Cohesity: cohesity_source_vmware"
 description: |-
-  Register a source on Cohesity Cluster
+  Register a VMware source on Cohesity Cluster
 ---
 
 # cohesity\_source\_vmware
 
-Register a source on Cohesity Cluster
+Register a VMware source on Cohesity Cluster
 
 ## Example Usage
 ```

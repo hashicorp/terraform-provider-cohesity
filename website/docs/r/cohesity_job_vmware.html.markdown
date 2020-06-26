@@ -2,12 +2,12 @@
 layout: "cohesity"
 page_title: "Cohesity: cohesity_job_vmware"
 description: |-
-  Create a Protection Job on Cohesity Cluster
+  Create a VMware Protection Job on Cohesity Cluster
 ---
 
 # cohesity\_job\_vmware
 
-Create a Protection Job on Cohesity Cluster
+Create a VMware Protection Job on Cohesity Cluster
 
 ## Example Usage
 ```

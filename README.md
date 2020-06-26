@@ -1,5 +1,4 @@
 Terraform Provider for Cohesity
-=========================
 
 - Website: https://www.terraform.io
 - [![Gitter chat](https://badges.gitter.im/hashicorp-terraform/Lobby.png)](https://gitter.im/hashicorp-terraform/Lobby)
@@ -8,7 +7,6 @@ Terraform Provider for Cohesity
 <img src="https://cdn.rawgit.com/hashicorp/terraform-website/master/content/source/assets/images/logo-hashicorp.svg" width="600px">
 
 Maintainers
------------
 
 This provider plugin is maintained by [Cohesity](https://www.cohesity.com/)
 
@@ -22,15 +20,13 @@ This provider plugin is maintained by [Cohesity](https://www.cohesity.com/)
  - [Suggestions and Feedback](#suggest)
 
 
-## Requirements :clipboard:
-------------
+## <a name ="requirements"></a> Requirements :clipboard:
 
 -	[Terraform](https://www.terraform.io/downloads.html) 0.12.20+
 -	[Go](https://golang.org/doc/install) 1.12.6+ (to build the provider plugin)
 -   [Cohesity](https://www.cohesity.com/) DataPlatform 6.4+
 
-## Building The Provider :pencil2:
----------------------
+## <a name ="building-the-provider"></a> Building The Provider :pencil2:
 
 Clone repository to: `$GOPATH/src/github.com/terraform-providers/terraform-provider-cohesity`
 
@@ -47,12 +43,11 @@ $ make build
 
 The provider binary can be found in `$GOPATH/bin` directory.
 
-## Using the provider :arrow_forward:
-----------------------
+## <a name ="using-the-provider"></a> Using the provider :arrow_forward:
+
 The Cohesity provider documentation can be found on [provider's website](https://www.terraform.io/docs/providers/cohesity/index.html)
 
-## Developing the Provider :hammer_and_pick:
----------------------------
+## <a name ="developing-the-provider"></a> Developing the Provider :hammer_and_pick:
 
 If you wish to work on the provider, you'll first need [Go](http://www.golang.org) installed on your machine (version 1.12.6+ is *required*). You'll also need to correctly setup a [GOPATH](http://golang.org/doc/code.html#GOPATH), as well as adding `$GOPATH/bin` to your `$PATH`.
 

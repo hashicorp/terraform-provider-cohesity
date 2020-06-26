@@ -29,7 +29,7 @@ resource "cohesity_job_run" "protect_vcenter" {
 The following arguments are supported:
 
 - name - (Required, string) The name of the protection job
-- run_type - (Required, string) Specifies the type of backup. The default value is **Regular** The supported types include **Full**,  **Regular**, **Log** and **System**
+- run_type - (Optional, string) Specifies the type of backup. The default value is **Regular** The supported types include **Full**,  **Regular**, **Log** and **System**
 - state - (Optional, string) Specifies whether to start or stop a protection job run. The default value is **start**. The supported values are **start** and **stop**
 - operation_timeout - (Optional, int) Specifies the time to wait in minutes for the protection job run to complete the run or stop the run. The default value is **120**
 - timestamp - (Required, string) Specifies the current timestamp to trigger starting or stopping a job run. The format is HH:MM
