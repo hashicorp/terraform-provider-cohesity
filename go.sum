@@ -78,7 +78,7 @@ github.com/chzyer/test v0.0.0-20180213035817-a1ea475d72b1/go.mod h1:Q3SI9o4m/ZMn
 github.com/client9/misspell v0.3.4/go.mod h1:qj6jICC3Q7zFZvVWo7KLAzC3yx5G7kyvSDkc90ppPyw=
 github.com/cohesity/management-sdk-go v0.0.0-20190503000543-e94b9955b2d8 h1:3IARF78rEpSIrIUULO9A2HGZCc/SaPpIliT8YWCjXV0=
 github.com/cohesity/management-sdk-go v0.0.0-20190503000543-e94b9955b2d8/go.mod h1:6x1vvGzN4NCabZQRpYjS72BNjqtDWGCbklGrGbmhAXQ=
-github.com/cohesity/management-sdk-go v1.1.2 h1:1hoBoKaEWam4aSaSkRzCr5zJkG0Ma7dTcLzEcBUQ43o=
+github.com/cohesity/management-sdk-go v1.1.2 h1:y0YUqNP7qrno+hOk3fR0U1MLbEsBz71a22MZopghlxY=
 github.com/cohesity/management-sdk-go v1.1.2/go.mod h1:6x1vvGzN4NCabZQRpYjS72BNjqtDWGCbklGrGbmhAXQ=
 github.com/coreos/bbolt v1.3.0/go.mod h1:iRUV2dpdMOn7Bo10OQBFzIJO9kkE559Wcmn+qkEiiKk=
 github.com/coreos/etcd v3.3.10+incompatible/go.mod h1:uF7uidLiAD3TWHmW31ZFd/JWoc32PjwdhPthX9715RE=
@@ -103,7 +103,6 @@ github.com/go-logfmt/logfmt v0.3.0/go.mod h1:Qt1PoO58o5twSAckw1HlFXLmHsOX5/0LbT9
 github.com/go-sql-driver/mysql v1.5.0/go.mod h1:DCzpHaOWr8IXmIStZouvnhqoel9Qv2LBy8hT2VhHyBg=
 github.com/go-stack/stack v1.8.0/go.mod h1:v0f6uXyyMGvRgIKkXu+yp6POWl0qKG85gN/melR3HDY=
 github.com/go-test/deep v1.0.1/go.mod h1:wGDj63lr65AM2AQyKZd/NYHGb0R+1RLqB8NKt3aSFNA=
-github.com/go-test/deep v1.0.3 h1:ZrJSEWsXzPOxaZnFteGEfooLba+ju3FYIbOrS+rQd68=
 github.com/go-test/deep v1.0.3/go.mod h1:wGDj63lr65AM2AQyKZd/NYHGb0R+1RLqB8NKt3aSFNA=
 github.com/gogo/protobuf v1.1.1/go.mod h1:r8qH/GZQm5c6nD/R0oafs1akxWv10x8SbQlK7atdtwQ=
 github.com/gogo/protobuf v1.2.0/go.mod h1:r8qH/GZQm5c6nD/R0oafs1akxWv10x8SbQlK7atdtwQ=
@@ -189,8 +188,8 @@ github.com/hashicorp/hil v0.0.0-20190212112733-ab17b08d6590 h1:2yzhWGdgQUWZUCNK+
 github.com/hashicorp/hil v0.0.0-20190212112733-ab17b08d6590/go.mod h1:n2TSygSNwsLJ76m8qFXTSc7beTb+auJxYdqrnoqwZWE=
 github.com/hashicorp/memberlist v0.1.0/go.mod h1:ncdBp14cuox2iFOq3kDiquKU6fqsTBc3W6JvZwjxxsE=
 github.com/hashicorp/serf v0.0.0-20160124182025-e4ec8cc423bb/go.mod h1:h/Ru6tmZazX7WO/GDmwdpS975F019L4t5ng5IgwbNrE=
-github.com/hashicorp/terraform v0.12.26 h1:FVsTCH1DMvTlzVSO2sKCzkwLczf/eZBO4GuY5IbHFk4=
-github.com/hashicorp/terraform v0.12.26/go.mod h1:CBxNAiTW0pLap44/3GU4j7cYE2bMhkKZNlHPcr4P55U=
+github.com/hashicorp/terraform v0.12.28 h1:mBA+A9dvMXk1xDpflKEP5mL/KOD0sXap+M4F4Vlgnvc=
+github.com/hashicorp/terraform v0.12.28/go.mod h1:CBxNAiTW0pLap44/3GU4j7cYE2bMhkKZNlHPcr4P55U=
 github.com/hashicorp/terraform-config-inspect v0.0.0-20191212124732-c6ae6269b9d7 h1:Pc5TCv9mbxFN6UVX0LH6CpQrdTM5YjbVI2w15237Pjk=
 github.com/hashicorp/terraform-config-inspect v0.0.0-20191212124732-c6ae6269b9d7/go.mod h1:p+ivJws3dpqbp1iP84+npOyAmTTOLMgCzrXd3GSdn/A=
 github.com/hashicorp/terraform-svchost v0.0.0-20191011084731-65d371908596 h1:hjyO2JsNZUKT1ym+FAdlBEkGPevazYsmVgIMw7dVELg=

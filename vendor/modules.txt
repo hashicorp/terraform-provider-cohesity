@@ -190,7 +190,7 @@ github.com/hashicorp/hil/ast
 github.com/hashicorp/hil
 github.com/hashicorp/hil/parser
 github.com/hashicorp/hil/scanner
-# github.com/hashicorp/terraform v0.12.26
+# github.com/hashicorp/terraform v0.12.28
 github.com/hashicorp/terraform/plugin
 github.com/hashicorp/terraform/helper/schema
 github.com/hashicorp/terraform/terraform
