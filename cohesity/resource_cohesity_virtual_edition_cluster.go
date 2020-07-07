@@ -23,12 +23,12 @@ func resourceCohesityVirtualEditionCluster() *schema.Resource {
 				Required:    true,
 				Description: "The name of the new Virtual edition cluster",
 			},
-			"licence_key": {
+			"license_key": {
 				Type:        schema.TypeString,
 				Required:    true,
 				Sensitive:   true,
-				DefaultFunc: schema.EnvDefaultFunc("VIRTUAL_COHESITY_CLUSTER_LICENCE_KEY", ""),
-				Description: "Cohesity licence key to apply after cluster creation",
+				DefaultFunc: schema.EnvDefaultFunc("VIRTUAL_COHESITY_CLUSTER_LICENSE_KEY", ""),
+				Description: "Cohesity license key to apply after cluster creation",
 			},
 			"metadata_fault_tolerance": {
 				Type:        schema.TypeInt,
@@ -210,7 +210,7 @@ func resourceCohesityVirtualEditionClusterCreate(resourceData *schema.ResourceDa
 	var requestBodyLicence models.LicenceClusterParameters
 	signedTime := int64(time.Now().Unix())
 	signedVersion := int64(2)
-	requestBodyLicence.LicenseKey = resourceData.Get("licence_key").(string)
+	requestBodyLicence.LicenseKey = resourceData.Get("license_key").(string)
 	requestBodyLicence.SignedByUser = cohesityConfig.clusterUsername
 	requestBodyLicence.SignedVersion = &signedVersion
 	requestBodyLicence.SignedTime = &signedTime
@@ -218,10 +218,10 @@ func resourceCohesityVirtualEditionClusterCreate(resourceData *schema.ResourceDa
 	err = client.Clusters().ApplyClusterLicence(&requestBodyLicence)
 
 	if err != nil {
-		log.Printf("[WARNING] Failed to apply licence for virtaul edition cluster %s, %s", clusterName, err.Error())
-		resourceData.Set("licence_key", "")
+		log.Printf("[WARNING] Failed to apply license for virtaul edition cluster %s, %s", clusterName, err.Error())
+		resourceData.Set("license_key", "")
 	}
-	log.Printf("[INFO] Successfully created and applied licence to  virtual edition cluster %s", clusterName)
+	log.Printf("[INFO] Successfully created and applied license to  virtual edition cluster %s", clusterName)
 	resourceData.SetId(strconv.FormatInt(*result.ClusterId, 10))
 	return resourceCohesityVirtualEditionClusterRead(resourceData, configMetaData)
 }
@@ -285,12 +285,12 @@ func resourceCohesityVirtualEditionClusterUpdate(resourceData *schema.ResourceDa
 		log.Printf(err.Error())
 		return errors.New("Failed to authenticate with Cohesity")
 	}
-	oldLicenceValue, _ := resourceData.GetChange("licence_key")
-	if resourceData.HasChange("licence_key") && oldLicenceValue == "" {
+	oldLicenceValue, _ := resourceData.GetChange("license_key")
+	if resourceData.HasChange("license_key") && oldLicenceValue == "" {
 		var requestBodyLicence models.LicenceClusterParameters
 		signedTime := int64(time.Now().Unix())
 		signedVersion := int64(2)
-		requestBodyLicence.LicenseKey = resourceData.Get("licence_key").(string)
+		requestBodyLicence.LicenseKey = resourceData.Get("license_key").(string)
 		requestBodyLicence.SignedByUser = cohesityConfig.clusterUsername
 		requestBodyLicence.SignedVersion = &signedVersion
 		requestBodyLicence.SignedTime = &signedTime
@@ -299,8 +299,8 @@ func resourceCohesityVirtualEditionClusterUpdate(resourceData *schema.ResourceDa
 			log.Printf(err.Error())
 			return errors.New("Failed to update virtual edition cluster")
 		}
-		resourceData.SetPartial("licence_key")
-		log.Printf("[INFO] Applied licence to virtual edition cluster: %s", clusterName)
+		resourceData.SetPartial("license_key")
+		log.Printf("[INFO] Applied license to virtual edition cluster: %s", clusterName)
 		return resourceCohesityVirtualEditionClusterRead(resourceData, configMetaData)
 	}
 	return errors.New("Failed to update virtual edition cluster")

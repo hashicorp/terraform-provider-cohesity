@@ -1,5 +1,26 @@
 package cohesity
 
+// variables for vmware job run acceptance test
+var (
+	vmWareJobProtectVM = "cirros-automation-vm"
+)
+
+// variables for vmware vm restore test
+var (
+	vmWareVMRestoreTaskName = "terraform_restore_task"
+)
+
+// variables for job vmware acceptance test
+var (
+	jobVMwareSourceEndpoint = "vc-67.eco.eng.cohesity.com"
+	vmWareJobName           = "terraform_protect_vcenter_vm"
+)
+
+// variables for source vmware acceptance test
+var (
+	sourceVMwareEndpoint = "vc-67.eco.eng.cohesity.com"
+)
+
 // variables for virtual edition cluster acceptance test
 var (
 	virtualEditionClusterNodeIP     = "10.2.145.49"

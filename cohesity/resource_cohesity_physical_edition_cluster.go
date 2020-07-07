@@ -23,12 +23,12 @@ func resourceCohesityPhysicalEditionCluster() *schema.Resource {
 				Required:    true,
 				Description: "The name of the new Physical edition cluste",
 			},
-			"licence_key": {
+			"license_key": {
 				Type:        schema.TypeString,
 				Required:    true,
 				Sensitive:   true,
-				DefaultFunc: schema.EnvDefaultFunc("PHYSICAL_COHESITY_CLUSTER_LICENCE_KEY", ""),
-				Description: "Cohesity licence key to apply after cluster creation",
+				DefaultFunc: schema.EnvDefaultFunc("PHYSICAL_COHESITY_CLUSTER_LICENSE_KEY", ""),
+				Description: "Cohesity license key to apply after cluster creation",
 			},
 			"metadata_fault_tolerance": {
 				Type:        schema.TypeInt,
@@ -259,7 +259,7 @@ func resourceCohesityPhysicalEditionClusterCreate(resourceData *schema.ResourceD
 	var requestBodyLicence models.LicenceClusterParameters
 	signedTime := int64(time.Now().Unix())
 	signedVersion := int64(2)
-	requestBodyLicence.LicenseKey = resourceData.Get("licence_key").(string)
+	requestBodyLicence.LicenseKey = resourceData.Get("license_key").(string)
 	requestBodyLicence.SignedByUser = cohesityConfig.clusterUsername
 	requestBodyLicence.SignedVersion = &signedVersion
 	requestBodyLicence.SignedTime = &signedTime
@@ -267,11 +267,11 @@ func resourceCohesityPhysicalEditionClusterCreate(resourceData *schema.ResourceD
 	err = client.Clusters().ApplyClusterLicence(&requestBodyLicence)
 
 	if err != nil {
-		log.Printf("[WARNING] Failed to apply licence for physical edition cluster %s, %s", clusterName, err.Error())
-		resourceData.Set("licence_key", "")
+		log.Printf("[WARNING] Failed to apply license for physical edition cluster %s, %s", clusterName, err.Error())
+		resourceData.Set("license_key", "")
 	}
 	resourceData.SetId(strconv.FormatInt(*result.ClusterId, 10))
-	log.Printf("[INFO] Successfully created and applied licence to physical edition cluster %s", clusterName)
+	log.Printf("[INFO] Successfully created and applied license to physical edition cluster %s", clusterName)
 	return resourceCohesityPhysicalEditionClusterRead(resourceData, configMetaData)
 }
 
@@ -334,12 +334,12 @@ func resourceCohesityPhysicalEditionClusterUpdate(resourceData *schema.ResourceD
 		log.Printf(err.Error())
 		return errors.New("Failed to authenticate with Cohesity")
 	}
-	oldLicenceValue, _ := resourceData.GetChange("licence_key")
-	if resourceData.HasChange("licence_key") && oldLicenceValue == "" {
+	oldLicenceValue, _ := resourceData.GetChange("license_key")
+	if resourceData.HasChange("license_key") && oldLicenceValue == "" {
 		var requestBodyLicence models.LicenceClusterParameters
 		signedTime := int64(time.Now().Unix())
 		signedVersion := int64(2)
-		requestBodyLicence.LicenseKey = resourceData.Get("licence_key").(string)
+		requestBodyLicence.LicenseKey = resourceData.Get("license_key").(string)
 		requestBodyLicence.SignedByUser = cohesityConfig.clusterUsername
 		requestBodyLicence.SignedVersion = &signedVersion
 		requestBodyLicence.SignedTime = &signedTime
@@ -348,8 +348,8 @@ func resourceCohesityPhysicalEditionClusterUpdate(resourceData *schema.ResourceD
 			log.Printf(err.Error())
 			return errors.New("Failed to update physical edition cluster")
 		}
-		resourceData.SetPartial("licence_key")
-		log.Printf("[INFO] Applied licence to physical edition cluster: %s", clusterName)
+		resourceData.SetPartial("license_key")
+		log.Printf("[INFO] Applied license to physical edition cluster: %s", clusterName)
 		return resourceCohesityPhysicalEditionClusterRead(resourceData, configMetaData)
 	}
 	return errors.New("Failed to update physical edition cluster")

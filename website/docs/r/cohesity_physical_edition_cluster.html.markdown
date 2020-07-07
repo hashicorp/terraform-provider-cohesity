@@ -51,8 +51,9 @@ resource "cohesity_virtual_edition_cluster" "physical"{
 ## Argument Reference
 
 The following arguments are supported:
+
 - cluster_name - (Required, string) The name of the new Physical edition cluster
-- licence_key - (Required, string) Cohesity licence key to apply after cluster creation. This can also be read from **PHYSICAL_COHESITY_CLUSTER_LICENCE_KEY** environment variable 
+- license_key - (Required, string) Cohesity license key to apply after cluster creation. This can also be read from **PHYSICAL_COHESITY_CLUSTER_LICENSE_KEY** environment variable 
 - metadata_fault_tolerance - (Optional, int) The metadata fault tolerance. Default value is **0**
 - enable_encryption - (Optional, bool) Specifies whether or not to enable encryption. If encryption is enabled, all data on the cluster will be encrypted. Default value is true
 - enable_fips_mode - (Optional, bool) Specifies whether or not to enable FIPS mode. This must be set to true in order to enable FIPS. Default value is **true**
@@ -62,7 +63,7 @@ The following arguments are supported:
 - domain_names - (Required, set of strings) The domain names to configure on the cluster
 - ntp_servers - (Required, set of strings) The NTP servers to configure on the cluster
 - dns_servers - (Required, set of strings) The DNS servers to configure on the cluster
-- virtual_ips - (Required, set of strings) The virtauls IPs for the new cluster
+- virtual_ips - (Required, set of strings) The virtual IPs for the new cluster
 - operation_timeout - (Optional, int) The time to wait in minutes for cluster creation or destruction. The default value is **120 minutes**
 - virtual_ip_hostname - (Required, string) The virtual IP hostname
 - ipmi_username - (Required, string) The IPMI username. This can also be read from **PHYSICAL_COHESITY_CLUSTER_IPMI_USERNAME** environment variable 
@@ -76,4 +77,5 @@ The following arguments are supported:
 #### Attributes Reference
 
 The following attributes are exported:
+
 - id - ID of the cluster
